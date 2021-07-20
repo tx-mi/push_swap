@@ -11,7 +11,8 @@ typedef struct s_stack
 	struct s_stack	*next;
 }					t_stack;
 
-void		push_swap(int argc, char **argv);
+void		push_swap(t_stack *stack_a);
+t_stack		*parse(int argc, char **argv);
 
 // Commands
 void		push(t_stack **from, t_stack **to);

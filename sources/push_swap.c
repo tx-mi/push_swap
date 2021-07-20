@@ -1,16 +1,8 @@
 #include "push_swap.h"
 
-static int	is_valid(int argc, char **argv)
+static int	is_valid(t_stack *stack_a)
 {
-	int	i;
-	int	j;
-
-	i = argc;
-	j = 0;
-	while (i-- > 1)
-		while (argv[i][j])
-			if (!ft_isdigit(argv[i][j++]))
-				return (0);
+	// gag
 	return (1);
 }
 
@@ -65,18 +57,15 @@ static int	up_element(t_stack **stack_b, int el)
 	return (res);
 }
 
-void	push_swap(int argc, char **argv)
+void	push_swap(t_stack *stack_a)
 {
-	t_stack	*stack_a;
 	t_stack	*stack_b;
 	int		length;
 	int		diff_m;
 
-	stack_a = NULL;
 	stack_b = NULL;
-	length = argc - 1;
+	length = len_stack(stack_a);
 	int count = 0;
-	add_to_stack(&stack_a, argc, argv);
 
 	// print_stack(&stack_a, &stack_b);
 	while (1)
@@ -119,16 +108,19 @@ void	push_swap(int argc, char **argv)
 		}
 		if (can_sort(&stack_a) && !stack_b)
 			break ;
-		print_stack(&stack_a, &stack_b);
+		// print_stack(&stack_a, &stack_b);
 	}
-	print_stack(&stack_a, &stack_b);
-	printf("%d\n", count);
+	// print_stack(&stack_a, &stack_b);
+	// printf("%d\n", count);
 }
 
 int	main(int argc, char **argv)
 {
-	if (is_valid(argc, argv))
-		push_swap(argc, argv);
+	t_stack	*stack_a;
+
+	stack_a = parse(argc, argv);
+	if (stack_a && is_valid(stack_a))
+		push_swap(stack_a);
 	else
 	{
 		write(2, "Error\n", 6);

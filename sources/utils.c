@@ -44,13 +44,13 @@ void	add_back(t_stack **stack, t_stack *new)
 		*stack = new;
 }
 
-void	add_to_stack(t_stack **stack, int argc, char **argv)
+void	add_to_stack(t_stack **stack, int len, char **elements)
 {
 	int	i;
 
 	i = 1;
-	while (i < argc)
-		add_back(stack, new_item(ft_atoi(argv[i++])));
+	while (i < len)
+		add_back(stack, new_item(ft_atoi(elements[i++])));
 }
 
 void	print_stack(t_stack **stack_a, t_stack **stack_b)
@@ -81,4 +81,37 @@ void	print_stack(t_stack **stack_a, t_stack **stack_b)
 	printf("_\t_\n");
 	printf("a\tb\n");
 	printf("-----------\n");
+}
+
+t_stack *parse(int argc, char **argv)
+{
+	t_stack	*stack_a;
+	int		i;
+	int		j;
+
+	stack_a = NULL;
+	i = 1;
+	j = 0;
+	while (i < argc)
+	{
+		while (argv[i][j])
+		{
+			if (!ft_isdigit(argv[i][j]) && argv[i][j] != ' ')
+				return (NULL);
+			j++;
+		}
+		i++;
+	}
+	i = 1;
+	j = 0;
+	if (argc > 2)
+		while (i < argc)
+			add_back(&stack_a, new_item(ft_atoi(argv[i++])));
+	else
+		while (argv[i][j])
+		{
+			add_back(&stack_a, new_item(ft_atoi(&(argv[i][j]))));
+			while (argv[i][j] && argv[i][j++] != ' ')
+		}
+	return (stack_a);
 }
