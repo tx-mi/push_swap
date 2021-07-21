@@ -12,7 +12,7 @@ typedef struct s_stack
 }					t_stack;
 
 void		push_swap(t_stack *stack_a);
-void		convert_to_ind(t_stack **stack_a);
+int			convert_to_ind(t_stack **stack_a);
 t_stack		*parse(int argc, char **argv);
 
 // Commands

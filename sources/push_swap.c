@@ -109,8 +109,7 @@ int	main(int argc, char **argv)
 	t_stack	*stack_a;
 
 	stack_a = parse(argc, argv);
-	convert_to_ind(&stack_a);
-	if (stack_a && is_valid(stack_a))
+	if (stack_a && is_valid(stack_a) && convert_to_ind(&stack_a))
 		push_swap(stack_a);
 	else
 	{

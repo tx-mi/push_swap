@@ -52,7 +52,21 @@ static void	set_ind(t_stack **stack_a, int el, int ind)
 	}
 }
 
-void	convert_to_ind(t_stack **stack_a)
+static int	has_duplicates(int *arr, int len)
+{
+	int i;
+
+	i = 0;
+	while (i < len - 1)
+	{
+		if (arr[i] == arr[i + 1])
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	convert_to_ind(t_stack **stack_a)
 {
 	t_stack	*el;
 	int	*arr;
@@ -63,6 +77,8 @@ void	convert_to_ind(t_stack **stack_a)
 	el = *stack_a;
 	len = len_stack(*stack_a);
 	arr = (int *)malloc(sizeof(int) * (len + 1));
+	if (!arr)
+		return (0);
 	while (el)
 	{
 		arr[i++] = el->element;
@@ -70,11 +86,16 @@ void	convert_to_ind(t_stack **stack_a)
 	}
 	arr[i] = '\0';
 	quick_sort(arr, 0, len);
+	if (has_duplicates(arr, len))
+		return (0);
 	i = 0;
 	el = *stack_a;
-	while (arr[i])
+	while (i < len)
 	{
 		set_ind(stack_a, arr[i], i);
 		i++;
 	}
+	free(arr);
+	arr = NULL;
+	return (1);
 }
