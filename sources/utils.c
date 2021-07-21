@@ -91,9 +91,9 @@ t_stack *parse(int argc, char **argv)
 
 	stack_a = NULL;
 	i = 1;
-	j = 0;
 	while (i < argc)
 	{
+		j = 0;
 		while (argv[i][j])
 		{
 			if (!ft_isdigit(argv[i][j]) && argv[i][j] != ' ')
@@ -106,12 +106,15 @@ t_stack *parse(int argc, char **argv)
 	j = 0;
 	if (argc > 2)
 		while (i < argc)
+		{
 			add_back(&stack_a, new_item(ft_atoi(argv[i++])));
+		}
 	else
 		while (argv[i][j])
 		{
 			add_back(&stack_a, new_item(ft_atoi(&(argv[i][j]))));
 			while (argv[i][j] && argv[i][j++] != ' ')
+				;
 		}
 	return (stack_a);
 }

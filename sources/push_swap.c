@@ -6,6 +6,11 @@ static int	is_valid(t_stack *stack_a)
 	return (1);
 }
 
+static void	finish_spin(t_stack **stack_a)
+{
+	; // gag
+}
+
 static int	in_b(t_stack **stack_b, int el)
 {
 	t_stack	*item;
@@ -65,9 +70,6 @@ void	push_swap(t_stack *stack_a)
 
 	stack_b = NULL;
 	length = len_stack(stack_a);
-	int count = 0;
-
-	// print_stack(&stack_a, &stack_b);
 	while (1)
 	{
 		if (is_sort(&stack_a) && !stack_b)
@@ -76,42 +78,30 @@ void	push_swap(t_stack *stack_a)
 		if (diff_m > 1)
 		{
 			if (stack_a->element > stack_a->next->element)
-			{
 				swap_a(&stack_a);
-				count++;
-			}
 			push_b(&stack_a, &stack_b);
-			count++;
 		}
 		else if (stack_a->element - stack_a->next->element == 1)
-		{
 			swap_a(&stack_a);
-			count++;
-		}
 		else if (len_stack(stack_b) > 0 && in_b(&stack_b, stack_a->element - 1))
 		{
-			count += up_element(&stack_b, stack_a->element - 1);
+			up_element(&stack_b, stack_a->element - 1);
 			push_a(&stack_b, &stack_a);
-			count++;
 		}
 		else if (len_stack(stack_b) > 0 && in_b(&stack_b, stack_a->next->element - 1))
 		{
-			count += up_element(&stack_b, stack_a->next->element - 1);
+			up_element(&stack_b, stack_a->next->element - 1);
 			swap_a(&stack_a);
 			push_a(&stack_b, &stack_a);
-			count++;
 		}		
 		else
-		{
 			rrotate_a(&stack_a);
-			count++;
-		}
 		if (can_sort(&stack_a) && !stack_b)
 			break ;
-		// print_stack(&stack_a, &stack_b);
 	}
+	if (!is_sort(&stack_a))
+		finish_spin(&stack_a);
 	// print_stack(&stack_a, &stack_b);
-	// printf("%d\n", count);
 }
 
 int	main(int argc, char **argv)
@@ -119,6 +109,7 @@ int	main(int argc, char **argv)
 	t_stack	*stack_a;
 
 	stack_a = parse(argc, argv);
+	convert_to_ind(&stack_a);
 	if (stack_a && is_valid(stack_a))
 		push_swap(stack_a);
 	else
