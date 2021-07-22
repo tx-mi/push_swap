@@ -91,7 +91,7 @@ t_stack *parse(int argc, char **argv)
 
 	stack_a = NULL;
 	i = 1;
-	while (i < argc)
+	while (i < argc) // check on letters
 	{
 		j = 0;
 		while (argv[i][j])
@@ -109,7 +109,7 @@ t_stack *parse(int argc, char **argv)
 		{
 			add_back(&stack_a, new_item(ft_atoi(argv[i++])));
 		}
-	else
+	else if (argc == 2)
 		while (argv[i][j])
 		{
 			add_back(&stack_a, new_item(ft_atoi(&(argv[i][j]))));

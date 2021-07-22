@@ -28,7 +28,7 @@ static int	in_b(t_stack **stack_b, int el)
 	return (0);
 }
 
-static int	up_element(t_stack **stack_b, int el)
+static int	up_element(t_stack ** stack_b, int el, t_coms **commands)
 {
 	int rr = 0;
 	int r = 0;
@@ -51,25 +51,33 @@ static int	up_element(t_stack **stack_b, int el)
 	{
 		res = rr;
 		while (rr-- > 0)
-			rrotate_b(stack_b);
+			rrotate_b(stack_b, commands);
 	}
 	else
 	{
 		res = r;
 		while (r-- > 0)
-			rotate_b(stack_b);
+			rotate_b(stack_b, commands);
 	}
 	return (res);
 }
 
+static void up(t_stack **stack, int el)
+{
+	;
+}
+
 void	push_swap(t_stack *stack_a)
 {
+	t_coms	*commands;
 	t_stack	*stack_b;
 	int		length;
 	int		diff_m;
 
 	stack_b = NULL;
+	commands = NULL;
 	length = len_stack(stack_a);
+	// print_stack(&stack_a, &stack_b);
 	while (1)
 	{
 		if (is_sort(&stack_a) && !stack_b)
@@ -78,29 +86,30 @@ void	push_swap(t_stack *stack_a)
 		if (diff_m > 1)
 		{
 			if (stack_a->element > stack_a->next->element)
-				swap_a(&stack_a);
-			push_b(&stack_a, &stack_b);
+				swap_a(&stack_a, &commands);
+			push_b(&stack_a, &stack_b, &commands);
 		}
 		else if (stack_a->element - stack_a->next->element == 1)
-			swap_a(&stack_a);
+			swap_a(&stack_a, &commands);
 		else if (len_stack(stack_b) > 0 && in_b(&stack_b, stack_a->element - 1))
 		{
-			up_element(&stack_b, stack_a->element - 1);
-			push_a(&stack_b, &stack_a);
+			up_element(&stack_b, stack_a->element - 1, &commands);
+			push_a(&stack_b, &stack_a, &commands);
 		}
 		else if (len_stack(stack_b) > 0 && in_b(&stack_b, stack_a->next->element - 1))
 		{
-			up_element(&stack_b, stack_a->next->element - 1);
-			swap_a(&stack_a);
-			push_a(&stack_b, &stack_a);
-		}		
+			up_element(&stack_b, stack_a->next->element - 1, &commands);
+			swap_a(&stack_a, &commands);
+			push_a(&stack_b, &stack_a, &commands);
+		}
 		else
-			rrotate_a(&stack_a);
+			rrotate_a(&stack_a, &commands);
 		if (can_sort(&stack_a) && !stack_b)
 			break ;
 	}
 	if (!is_sort(&stack_a))
-		finish_spin(&stack_a);
+		up_element(&stack_a, 0, &commands);
+	print_coms(&commands);
 	// print_stack(&stack_a, &stack_b);
 }
 
