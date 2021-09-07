@@ -5,58 +5,68 @@
 # include "stdio.h"
 # include "libft.h"
 
+typedef struct s_info
+{
+	int next;
+	int mid;
+	int max;
+	int flag;
+} t_info;
+
 typedef struct s_stack
 {
-	int				element;
-	struct s_stack	*next;
-}					t_stack;
+	int value;
+	int order;
+	int flag;
+	struct s_stack *next;
+	struct s_stack *prev;
+} t_stack;
 
-typedef struct s_coms
+typedef struct s_listOperations
 {
-	char			*com;
-	struct s_coms	*next;
-}					t_coms;
+	char *operation;
+	struct s_listOperations *next;
+} t_listOperations;
 
-void		push_swap(t_stack *stack_a);
-int			convert_to_ind(t_stack **stack_a);
-t_stack		*parse(int argc, char **argv);
+// Push-Swap
+void push_swap(t_stack **stack);
 
-// Optimize
-t_coms		*new_command(char *command);
-void		add_command(t_coms **commands, t_coms *com);
-void		print_coms(t_coms **commands);
+// Quick sort
+void quick_sort(int *array, int start, int length);
 
-// Commands
+// Parse
+t_stack *parse(int argc, char **argv);
+
+// Stack control
+t_stack *new_item(int value);
+int len_stack(t_stack *first_item);
+void add_back(t_stack **stack, t_stack *new_item);
+void add_to_stack(t_stack **stack, int len, char **values);
+
+// Stack functions
 void		push(t_stack **from, t_stack **to);
 void		swap(t_stack **stack);
 void		rotate(t_stack **stack);
 void		rrotate(t_stack **stack);
 
-// Utils
-t_stack		*new_item(int element);
-void		add_to_stack(t_stack **stack, int argc, char **argv);
-void		add_back(t_stack **stack, t_stack *new);
-int			len_stack(t_stack *item);
-void		print_stack(t_stack **stack_a, t_stack **stack_b);
-
-int			diff_mod(int a, int b);
-int			is_sort(t_stack **stack);
-int			can_sort(t_stack **stack);
-
 // Operations
-void		swap_a(t_stack **stack_a, t_coms **commands);
-void		swap_b(t_stack **stack_b, t_coms **commands);
-void		swap_s(t_stack **stack_a, t_stack **stack_b, t_coms **commands);
+void		swap_a(t_stack **stack_a, t_listOperations **commands);
+void		swap_b(t_stack **stack_b, t_listOperations **commands);
+void		swap_s(t_stack **stack_a, t_stack **stack_b, t_listOperations **commands);
 
-void		push_a(t_stack **stack_b, t_stack **stack_a, t_coms **commands);
-void		push_b(t_stack **stack_a, t_stack **stack_b, t_coms **commands);
+void		push_a(t_stack **stack_b, t_stack **stack_a, t_listOperations **commands);
+void		push_b(t_stack **stack_a, t_stack **stack_b, t_listOperations **commands);
 
-void		rotate_a(t_stack **stack_a, t_coms **commands);
-void		rotate_b(t_stack **stack_b, t_coms **commands);
-void		rotate_r(t_stack **stack_a, t_stack **stack_b, t_coms **commands);
+void		rotate_a(t_stack **stack_a, t_listOperations **commands);
+void		rotate_b(t_stack **stack_b, t_listOperations **commands);
+void		rotate_r(t_stack **stack_a, t_stack **stack_b, t_listOperations **commands);
 
-void		rrotate_a(t_stack **stack_a, t_coms **commands);
-void		rrotate_b(t_stack **stack_b, t_coms **commands);
-void		rrotate_r(t_stack **stack_a, t_stack **stack_b, t_coms **commands);
+void		rrotate_a(t_stack **stack_a, t_listOperations **commands);
+void		rrotate_b(t_stack **stack_b, t_listOperations **commands);
+void		rrotate_r(t_stack **stack_a, t_stack **stack_b, t_listOperations **commands);
+
+// Utils
+t_listOperations *new_operation(char *operation);
+void add_operation(t_listOperations **operations, t_listOperations *new_item);
 
 #endif

@@ -10,7 +10,8 @@ HEADER_INC = -I./includes/
 
 # Sources
 PATH_TO_SRCS = sources/
-SRC = 	push_swap.c commands.c utils.c utils2.c operations.c convert.c optimize.c
+SRC = 	operations.c parse.c push_swap.c quick_sort.c \
+		stack_control.c stack_functions.c utils.c
 SRCS = $(addprefix $(PATH_TO_SRCS), $(SRC))
 
 # Commands
