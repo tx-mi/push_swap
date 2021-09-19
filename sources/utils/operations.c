@@ -27,3 +27,4 @@ void	add_operation(t_listOperations **operations, t_listOperations *new_item)
 	else
 		*operations = new_item;
 }
+

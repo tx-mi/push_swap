@@ -9,11 +9,9 @@ HEADER = ./includes/push_swap.h
 HEADER_INC = -I./includes/
 
 # Sources
-PATH_TO_SRCS = sources/
-SRC = 	operations.c parse.c push_swap.c quick_sort.c \
-		stack_control.c stack_functions.c utils.c
-SRCS = $(addprefix $(PATH_TO_SRCS), $(SRC))
-
+SRC = $(shell ls ./sources/*.c) 
+UTILS = $(shell ls ./sources/utils/*.c) 
+SRCS = $(SRC) $(UTILS)
 # Commands
 CC	= gcc
 CFLAGS = -Wall -Wextra -Werror

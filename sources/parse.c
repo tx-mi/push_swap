@@ -32,11 +32,9 @@ t_stack *parse(int argc, char **argv)
 	i = 1;
 	j = 0;
 	if (argc > 2)
-		while (i < argc)
-		{
+		while (i < argc) // Parse without quotes
 			add_back(&stack_a, new_item(ft_atoi(argv[i++])));
-		}
-	else if (argc == 2)
+	else if (argc == 2) // Parse with quotes
 		while (argv[i][j])
 		{
 			add_back(&stack_a, new_item(ft_atoi(&(argv[i][j]))));

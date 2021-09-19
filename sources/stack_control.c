@@ -56,3 +56,15 @@ void	add_to_stack(t_stack **stack, int len, char **values)
 	while (i < len)
 		add_back(stack, new_item(ft_atoi(values[i++])));
 }
+
+void	print_stack(t_stack *firts_item)
+{
+	t_stack *item;
+
+	item = firts_item;
+	while (item)
+	{
+		printf("value: %d - order: %d\n", item->value, item->order);
+		item = item->next;
+	}
+}
