@@ -10,6 +10,7 @@ t_stack	*new_item(int value)
 	item->value = value;
 	item->flag = 0;
 	item->order = 0;
+	item->fix_position = 0;
 	item->next = NULL;
 	item->prev = NULL;
 	return (item);

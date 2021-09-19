@@ -46,15 +46,42 @@ void	print_stacks(t_stack **stack_a, t_stack **stack_b)
 	printf("-----------\n");
 }
 
-int 	has_in(t_stack *el, int mid)
+int 	has_in_a(t_stack *el, int mid)
 {
 	while (el)
 	{
-		if (el->order <= mid)
+		if (el->order <= mid && !el->fix_position)
 			return (1);
 		el = el->next;
 	}
 	return (0);
+}
+
+int 	has_in_b(t_stack *el, int mid)
+{
+	while (el)
+	{
+		if (el->order >= mid)
+			return (1);
+		el = el->next;
+	}
+	return (0);
+}
+
+void	fix_item(t_stack **stack_a, t_stack **stack_b, t_info **info, t_listOperations **commands)
+{
+	if ((*stack_a)->order == (*info)->next->order)
+	{
+		print_info(*info);
+		printf("$%d\n", ((*stack_a)->order));
+		(*stack_a)->fix_position = 1;
+		rotate_a(stack_a, commands);
+		printf("$%d\n", (*info)->next->order + 1);
+		(*info)->next = search_element(*stack_a, (*info)->next->order + 1);
+		write(1, "u\n", 2);
+		// if (!(*info)->next)
+		// (*info)->next = search_element(*stack_b, (*info)->next->order + 1);
+	}
 }
 
 void push_swap(t_stack **stack, int *sorted_array, t_info *info)
@@ -72,12 +99,14 @@ void push_swap(t_stack **stack, int *sorted_array, t_info *info)
 	get_mid(&stack_a, 1, &info);
 	print_info(info);
 	print_stacks(&stack_a, &stack_b);
-	while (has_in(stack_a, info->mid->order))
+	// move to b
+	while (has_in_a(stack_a, info->mid->order))
 	{
 		if (stack_a->order <= info->mid->order)
 			push_b(&stack_a, &stack_b, &opers);
 		else
 			rotate_a(&stack_a, &opers);
+		// fix_item(&stack_a, &stack_b, &info, &opers);
 		print_stacks(&stack_a, &stack_b);
 	}
 	while (stack_b)
@@ -85,6 +114,21 @@ void push_swap(t_stack **stack, int *sorted_array, t_info *info)
 		info->max = info->mid;
 		get_mid(&stack_b, 2, &info);
 		info->flag++;
+		print_info(info);
+		// move to a
+		while (has_in_b(stack_b, info->mid->order))
+		{
+			// fix_item(&stack_a, &stack_b, &info, &opers);
+			if (stack_b->order >= info->mid->order || stack_b == info->next)
+			{
+				stack_b->flag += info->flag;
+				push_a(&stack_b, &stack_a, &opers);
+				// fix_item(&stack_a, &stack_b, &info, &opers);
+			}
+			else
+				rotate_b(&stack_b, &opers);
+			print_stacks(&stack_a, &stack_b);
+		}
 	}
 }
 

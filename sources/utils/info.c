@@ -4,10 +4,11 @@ t_stack *search_element(t_stack *first_item, int order)
 {
 	t_stack *element;
 
+	write(1, "a", 2);
 	element = first_item;
-	while (element->order != order)
+	while (element && element->order != order)
 		element = element->next;
-	if (element->order == order)
+	if (element && element->order == order)
 		return (element);
 	return (NULL);
 }

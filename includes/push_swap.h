@@ -10,6 +10,7 @@ typedef struct s_stack
 	int value;
 	int order;
 	int flag;
+	int	fix_position;
 	struct s_stack *next;
 	struct s_stack *prev;
 } t_stack;
