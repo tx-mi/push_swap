@@ -1,34 +1,35 @@
 #include "push_swap.h"
 
-t_stack *search_element(t_stack *first_item, int order)
-{
-	t_stack *element;
-
-	write(1, "a", 2);
-	element = first_item;
-	while (element && element->order != order)
-		element = element->next;
-	if (element && element->order == order)
-		return (element);
-	return (NULL);
-}
-
 void	init_info(t_info **info)
 {
 	*info = (t_info *)malloc(sizeof(t_info));
-	(*info)->next = NULL;
-	(*info)->mid = NULL;
-	(*info)->max = NULL;
+	(*info)->next = 0;
+	(*info)->mid = 0;
+	(*info)->max = 0;
 	(*info)->flag = 0;
 }
 
-void	get_mid(t_stack **stack, int choice, t_info **info)
+int	get_mid(int max, int next, int choice)
 {
 	int mid;
 
 	if (choice == 1)
-		mid = (*info)->max->order / 2 + (*info)->next->order;
+		mid = max / 2 + next;
 	else
-		mid = ((*info)->max->order - (*info)->next->order) / 2 + (*info)->next->order;
-	(*info)->mid = search_element(*stack, mid);
+		mid = (max - next) / 2 + next;
+	return (mid);
+}
+
+int	get_max(t_stack *stack_a)
+{
+	int max;
+	
+	max = 0;
+	while (stack_a)
+	{
+		if (!stack_a->fix_position && stack_a->order > max)
+			max = stack_a->order;
+		stack_a = stack_a->next;
+	}
+	return (max);
 }

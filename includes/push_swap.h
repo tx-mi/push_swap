@@ -17,9 +17,9 @@ typedef struct s_stack
 
 typedef struct s_info
 {
-	t_stack *next;
-	t_stack *mid;
-	t_stack *max;
+	int	next;
+	int	mid;
+	int	max;
 	int flag;
 } t_info;
 
@@ -74,8 +74,8 @@ void		rrotate_r(t_stack **stack_a, t_stack **stack_b, t_listOperations **command
 // Utils
 t_listOperations *new_operation(char *operation);
 void	add_operation(t_listOperations **operations, t_listOperations *new_item);
-t_stack *search_element(t_stack *first_item, int order);
 void	init_info(t_info **info);
-void	get_mid(t_stack **stack, int choice, t_info **info);
+int		get_mid(int max, int next, int choice);
+int		get_max(t_stack *stack_a);
 
 #endif
