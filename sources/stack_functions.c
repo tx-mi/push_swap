@@ -8,6 +8,7 @@ void	push(t_stack **from, t_stack **to)
 	(*from) = (*from)->next;
 	item->next = (*to);
 	*to = item;
+	if ((*from))
 }
 
 void	swap(t_stack **stack)
