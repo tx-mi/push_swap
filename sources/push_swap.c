@@ -84,8 +84,8 @@ void	first_divide(t_stack **stack_a, t_stack **stack_b, t_info **info, t_listOpe
 {
 	(*info)->max = get_max(*stack_a); 
 	(*info)->mid = get_mid((*info)->max, (*info)->next, 1);
-	print_info(*info);
-	print_stacks(stack_a, stack_b);
+	// print_info(*info);
+	// print_stacks(stack_a, stack_b);
 	while (has_in_a(*stack_a, (*info)->mid))
 	{
 		if (!(*stack_a)->fix_position && (*stack_a)->order <= (*info)->mid)
@@ -93,7 +93,7 @@ void	first_divide(t_stack **stack_a, t_stack **stack_b, t_info **info, t_listOpe
 		else
 			rotate_a(stack_a, operations);
 	}
-	print_stacks(stack_a, stack_b);
+	// print_stacks(stack_a, stack_b);
 }
 
 void	second_divide(t_stack **stack_a, t_stack **stack_b, t_info **info, t_listOperations **operations)
@@ -103,8 +103,7 @@ void	second_divide(t_stack **stack_a, t_stack **stack_b, t_info **info, t_listOp
 		(*info)->max = get_max(*stack_b); 
 		(*info)->mid = get_mid((*info)->max, (*info)->next, 2);
 		(*info)->flag++;
-		printf("mid = %d\n", (*info)->mid);
-		printf("b = %p\n", *stack_b);
+		// printf("mid = %d\n", (*info)->mid);
 		while (has_in_b(*stack_b, (*info)->mid))
 		{
 			if ((*stack_b)->order >= (*info)->mid)
@@ -123,7 +122,7 @@ void	second_divide(t_stack **stack_a, t_stack **stack_b, t_info **info, t_listOp
 			else
 				rotate_b(stack_b, operations);
 		}
-		print_stacks(stack_a, stack_b);
+		// print_stacks(stack_a, stack_b);
 	}
 }
 
@@ -154,16 +153,12 @@ void	third_divide(t_stack **stack_a, t_stack **stack_b, t_info **info, t_listOpe
 				(*info)->next++;
 				rotate_a(stack_a, operations);
 			}
-			push_b(stack_a, stack_b, operations);
-			if ((*stack_a)->order == (*info)->next)
-			{
-				(*stack_a)->fix_position = 1;
-				(*info)->next++;
-				rotate_a(stack_a, operations);
-			}
+			else
+				push_b(stack_a, stack_b, operations);
 		}
 		second_divide(stack_a, stack_b, info, operations);
-		print_info(*info);
+		// print_info(*info);
+		// print_stacks(stack_a, stack_b);
 	}
 
 }
@@ -179,9 +174,17 @@ void push_swap(t_stack **stack, int *sorted_array, t_info *info)
 	operations = NULL;
 	init_info(&info);
 	info->next = 1;
-	first_divide(&stack_a, &stack_b, &info, &operations);
-	second_divide(&stack_a, &stack_b, &info, &operations);
-	third_divide(&stack_a, &stack_b, &info, &operations);
+	while (!sorted(stack_a))
+	{
+		first_divide(&stack_a, &stack_b, &info, &operations);
+		second_divide(&stack_a, &stack_b, &info, &operations);
+		third_divide(&stack_a, &stack_b, &info, &operations);
+	}
+	while (operations)
+	{
+		printf("%s\n", operations->operation);
+		operations = operations->next;
+	}
 }
 
 int	main(int argc, char **argv)

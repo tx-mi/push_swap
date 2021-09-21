@@ -14,13 +14,13 @@ UTILS = $(shell ls ./sources/utils/*.c)
 SRCS = $(SRC) $(UTILS)
 # Commands
 CC	= gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS =  -g 
 RM = rm -rf
 
 all: run_lib $(NAME) 
 
 $(NAME): $(SRCS) $(LIBFT)
-	$(CC) $(HEADER_INC) $(SRCS) $(LIBFT) -o $@
+	$(CC) $(CFLAGS) $(HEADER_INC) $(SRCS) $(LIBFT) -o $@
 
 run_lib:
 	make -C libft/
