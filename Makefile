@@ -9,23 +9,29 @@ HEADER = ./includes/push_swap.h
 HEADER_INC = -I./includes/
 
 # Sources
-SRC = $(shell ls ./sources/*.c) 
-UTILS = $(shell ls ./sources/utils/*.c) 
-SRCS = $(SRC) $(UTILS)
+SRC = $(shell ls ./sources/*.c)
+# UTILS = $(shell ls ./sources/utils/*.c) 
+SRCS =  $(SRC)
+
+OBJS = $(patsubst %.c, %.o, $(SRC))
 # Commands
 CC	= gcc
-CFLAGS =  -g 
+CFLAGS =
 RM = rm -rf
+
+%.o : %.c $(HEADER)
+	$(CC) $(CFLAGS) -c $(HEADER_INC) $< -o $@
 
 all: run_lib $(NAME) 
 
-$(NAME): $(SRCS) $(LIBFT)
-	$(CC) $(CFLAGS) $(HEADER_INC) $(SRCS) $(LIBFT) -o $@
+$(NAME): $(OBJS) $(LIBFT)
+	$(CC) $(CFLAGS) $(HEADER_INC) $(LIBFT) -o $(NAME) $(OBJS)
 
 run_lib:
 	make -C libft/
 
 clean:
+	$(RM) $(OBJS)
 	make -C libft/ clean
 
 fclean: clean

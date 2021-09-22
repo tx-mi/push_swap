@@ -1,48 +1,5 @@
 #include "push_swap.h"
 
-void	print_info(t_info *info)
-{
-	printf("-----------------------------------------------------------\n");
-	printf("max: %d\n", info->max);
-	printf("\n");
-	printf("mid: %d\n", info->mid);
-	printf("\n");
-	printf("next: %d\n", info->next);
-	printf("\n");
-	printf("flag: %d\n", info->flag);
-	printf("-----------------------------------------------------------\n");
-}
-
-void	print_stacks(t_stack **stack_a, t_stack **stack_b)
-{
-	t_stack	*item_a;
-	t_stack	*item_b;
-
-	item_a = (*stack_a);
-	item_b = (*stack_b);
-	while (item_a || item_b)
-	{
-		if (item_a)
-		{
-			printf("%d\t", item_a->order);
-			item_a = item_a->next;
-		}
-		else
-			printf(" \t");
-		if (item_b)
-		{
-			printf("%d", item_b->order);
-			item_b = item_b->next;
-		}
-		else
-			printf(" \t");
-		printf("\n");
-	}
-	printf("_\t_\n");
-	printf("a\tb\n");
-	printf("-----------\n");
-}
-
 int 	has_in_a(t_stack *el, int mid)
 {
 	while (el)
@@ -84,8 +41,6 @@ void	first_divide(t_stack **stack_a, t_stack **stack_b, t_info **info, t_listOpe
 {
 	(*info)->max = get_max(*stack_a); 
 	(*info)->mid = get_mid((*info)->max, (*info)->next, 1);
-	// print_info(*info);
-	// print_stacks(stack_a, stack_b);
 	while (has_in_a(*stack_a, (*info)->mid))
 	{
 		if (!(*stack_a)->fix_position && (*stack_a)->order <= (*info)->mid)
@@ -93,7 +48,6 @@ void	first_divide(t_stack **stack_a, t_stack **stack_b, t_info **info, t_listOpe
 		else
 			rotate_a(stack_a, operations);
 	}
-	// print_stacks(stack_a, stack_b);
 }
 
 void	second_divide(t_stack **stack_a, t_stack **stack_b, t_info **info, t_listOperations **operations)
@@ -103,26 +57,25 @@ void	second_divide(t_stack **stack_a, t_stack **stack_b, t_info **info, t_listOp
 		(*info)->max = get_max(*stack_b); 
 		(*info)->mid = get_mid((*info)->max, (*info)->next, 2);
 		(*info)->flag++;
-		// printf("mid = %d\n", (*info)->mid);
 		while (has_in_b(*stack_b, (*info)->mid))
 		{
-			if ((*stack_b)->order >= (*info)->mid)
-			{
-				(*stack_b)->flag = (*info)->flag;
-				push_a(stack_b, stack_a, operations);
-			}
-			else if ((*stack_b)->order == (*info)->next)
+			if ((*stack_b)->order == (*info)->next)
 			{
 				(*stack_b)->flag = (*info)->flag;
 				(*stack_b)->fix_position = 1;
 				(*info)->next++;
 				push_a(stack_b, stack_a, operations);
 				rotate_a(stack_a, operations);
+
+			}
+			else if ((*stack_b)->order >= (*info)->mid)
+			{
+				(*stack_b)->flag = (*info)->flag;
+				push_a(stack_b, stack_a, operations);
 			}
 			else
 				rotate_b(stack_b, operations);
 		}
-		// print_stacks(stack_a, stack_b);
 	}
 }
 
@@ -157,8 +110,6 @@ void	third_divide(t_stack **stack_a, t_stack **stack_b, t_info **info, t_listOpe
 				push_b(stack_a, stack_b, operations);
 		}
 		second_divide(stack_a, stack_b, info, operations);
-		// print_info(*info);
-		// print_stacks(stack_a, stack_b);
 	}
 
 }
@@ -168,6 +119,9 @@ void push_swap(t_stack **stack, int *sorted_array, t_info *info)
 	t_stack *stack_a;
 	t_stack *stack_b;
 	t_listOperations *operations;
+	
+	char *s1;
+	char *s2;
 
 	stack_a = *stack;
 	stack_b = NULL;
@@ -180,11 +134,31 @@ void push_swap(t_stack **stack, int *sorted_array, t_info *info)
 		second_divide(&stack_a, &stack_b, &info, &operations);
 		third_divide(&stack_a, &stack_b, &info, &operations);
 	}
-	while (operations)
+	while (operations->next)
 	{
-		printf("%s\n", operations->operation);
+		s1 = operations->operation;
+		s2 = operations->next->operation;
+		if (s2 && !ft_strncmp(s1, "ra", 2) && !ft_strncmp(s2, "rb", 2))
+		{
+			printf("rr\n");
+			operations = operations->next;
+		}
+		else if (s2 && !ft_strncmp(s1, "rb", 2) && !ft_strncmp(s2, "ra", 2))
+		{
+			printf("rr\n");
+			operations = operations->next;
+		}
+		else if (s2 && !ft_strncmp(s1, "pa", 2) && !(ft_strncmp(s2, "pb", 2)))
+			operations = operations->next;
+		else if (s2 && !ft_strncmp(s1, "pb", 2) && !(ft_strncmp(s2, "pa", 2)))
+			operations = operations->next;
+		else
+		{
+			printf("%s\n", operations->operation);
+		}
 		operations = operations->next;
 	}
+	printf("%s\n", operations->operation);
 }
 
 int	main(int argc, char **argv)
