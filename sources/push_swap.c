@@ -64,24 +64,7 @@ void	third_divide(t_stack **stack_a, t_stack **stack_b, t_info **info, t_listOpe
 	}
 }
 
-void	free_all(t_stack **stack_a, t_stack **stack_b, t_info **info)
-{
-	t_stack	*tmp;
-	
-	while ((*stack_a))
-	{
-		tmp = (*stack_a);
-		free(tmp);
-		(*stack_a) = (*stack_a)->next;
-	}
-	while ((*stack_b))
-	{
-		tmp = (*stack_b);
-		free(tmp);
-		(*stack_b) = (*stack_b)->next;
-	}
-	free(*info);
-}
+
 
 void	push_swap(t_stack **stack)
 {
@@ -103,6 +86,7 @@ void	push_swap(t_stack **stack)
 	}
 	free_all(&stack_a, &stack_b, &info);
 	print_operations(operations);
+	free_operations(&operations);
 }
 
 int	main(int argc, char **argv)
@@ -112,12 +96,11 @@ int	main(int argc, char **argv)
 
 	stack_a = parse(argc, argv);
 	sorted_array = sorting_array(&stack_a);
-	if (!(*argv))
-		return (2);
 	if (!stack_a || !sorted_array)
 	{
 		write(2, "Error\n", 6);
 		return (2);
 	}
+	free(sorted_array);
 	push_swap(&stack_a);
 }

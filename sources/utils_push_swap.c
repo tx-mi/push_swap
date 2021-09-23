@@ -47,3 +47,22 @@ int	is_sorted(t_stack *stack_a)
 	}
 	return (1);
 }
+
+void	free_all(t_stack **stack_a, t_stack **stack_b, t_info **info)
+{
+	t_stack	*tmp;
+	
+	while ((*stack_a))
+	{
+		tmp = (*stack_a);
+		free(tmp);
+		(*stack_a) = (*stack_a)->next;
+	}
+	while ((*stack_b))
+	{
+		tmp = (*stack_b);
+		free(tmp);
+		(*stack_b) = (*stack_b)->next;
+	}
+	free(*info);
+}

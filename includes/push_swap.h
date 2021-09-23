@@ -66,10 +66,11 @@ int		len_stack(t_stack *first_item);
 void	add_back(t_stack **stack, t_stack *new_item);
 void	add_to_stack(t_stack **stack, int len, char **values);
 void	print_stack(t_stack *first_item);
-
+void	free_all(t_stack **stack_a, t_stack **stack_b, t_info **info);
 
 // Out put
 void	print_operations(t_listOperations *operations);
+void	free_operations(t_listOperations **operations);
 
 // API Operations
 void		swap_a(t_stack **stack_a, t_listOperations **commands);
