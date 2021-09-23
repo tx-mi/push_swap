@@ -13,7 +13,7 @@ static int	check_rr(char *s1, char *s2)
 
 void	free_operations(t_listOperations **operations)
 {
-	t_listOperations *tmp;
+	t_listOperations	*tmp;
 
 	while ((*operations))
 	{

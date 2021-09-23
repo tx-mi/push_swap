@@ -51,7 +51,7 @@ int	is_sorted(t_stack *stack_a)
 void	free_all(t_stack **stack_a, t_stack **stack_b, t_info **info)
 {
 	t_stack	*tmp;
-	
+
 	while ((*stack_a))
 	{
 		tmp = (*stack_a);

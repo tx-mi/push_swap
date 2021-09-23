@@ -1,8 +1,9 @@
 #include "push_swap.h"
 
-void	first_divide(t_stack **stack_a, t_stack **stack_b, t_info **info, t_listOperations **operations)
+void	first_divide(t_stack **stack_a, t_stack **stack_b,
+			t_info **info, t_listOperations **operations)
 {
-	(*info)->max = get_max(*stack_a); 
+	(*info)->max = get_max(*stack_a);
 	(*info)->mid = get_mid((*info)->max, (*info)->next, 1);
 	while (has_in_a(*stack_a, (*info)->mid))
 	{
@@ -13,7 +14,8 @@ void	first_divide(t_stack **stack_a, t_stack **stack_b, t_info **info, t_listOpe
 	}
 }
 
-void	second_divide(t_stack **stack_a, t_stack **stack_b, t_info **info, t_listOperations **operations)
+void	second_divide(t_stack **stack_a, t_stack **stack_b,
+			t_info **info, t_listOperations **operations)
 {
 	while ((*stack_b))
 	{
@@ -41,7 +43,8 @@ void	second_divide(t_stack **stack_a, t_stack **stack_b, t_info **info, t_listOp
 	}
 }
 
-void	third_divide(t_stack **stack_a, t_stack **stack_b, t_info **info, t_listOperations **operations)
+void	third_divide(t_stack **stack_a, t_stack **stack_b,
+			t_info **info, t_listOperations **operations)
 {
 	int	temp_flag;
 
@@ -49,7 +52,7 @@ void	third_divide(t_stack **stack_a, t_stack **stack_b, t_info **info, t_listOpe
 	{
 		temp_flag = (*stack_a)->flag;
 		while (!(*stack_a)->fix_position && (*stack_a)->flag == temp_flag)
-		{ 
+		{
 			if ((*stack_a)->order == (*info)->next)
 			{
 				(*stack_a)->fix_position = 1;
@@ -63,8 +66,6 @@ void	third_divide(t_stack **stack_a, t_stack **stack_b, t_info **info, t_listOpe
 		second_divide(stack_a, stack_b, info, operations);
 	}
 }
-
-
 
 void	push_swap(t_stack **stack)
 {
@@ -92,7 +93,7 @@ void	push_swap(t_stack **stack)
 int	main(int argc, char **argv)
 {
 	t_stack	*stack_a;
-	int *sorted_array;
+	int		*sorted_array;
 
 	stack_a = parse(argc, argv);
 	sorted_array = sorting_array(&stack_a);
