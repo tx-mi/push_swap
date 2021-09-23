@@ -2,8 +2,8 @@
 
 static void	set_indexes(t_stack **stack, int *array)
 {
-	t_stack *item;
-	int i;
+	t_stack	*item;
+	int		i;
 
 	item = *stack;
 	i = 0;
@@ -19,7 +19,7 @@ static void	set_indexes(t_stack **stack, int *array)
 
 static int	has_duplicates(int *arr, int len)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < len - 1)
@@ -33,10 +33,10 @@ static int	has_duplicates(int *arr, int len)
 
 int	*sorting_array(t_stack **stack)
 {
-	t_stack *item;
-	int *array;
-	int len;
-	int i;
+	t_stack	*item;
+	int		*array;
+	int		len;
+	int		i;
 
 	i = 0;
 	item = *stack;

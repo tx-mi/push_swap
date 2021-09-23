@@ -11,7 +11,7 @@ void	init_info(t_info **info)
 
 int	get_mid(int max, int next, int choice)
 {
-	int mid;
+	int	mid;
 
 	if (choice == 1)
 		mid = max / 2 + next;
@@ -22,8 +22,8 @@ int	get_mid(int max, int next, int choice)
 
 int	get_max(t_stack *stack_a)
 {
-	int max;
-	
+	int	max;
+
 	max = 0;
 	while (stack_a)
 	{

@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-static void int_swap(int *a, int *b)
+static void	int_swap(int *a, int *b)
 {
 	if (*a != *b)
 	{
@@ -10,12 +10,15 @@ static void int_swap(int *a, int *b)
 	}
 }
 
-static int partition(int **array, int start, int length)
+static int	partition(int **array, int start, int length)
 {
-	int pivot = (*array)[start];
-	int i = start + 1;
-	int j = i;
+	int	pivot;
+	int	i;
+	int	j;
 
+	pivot = (*array)[start];
+	i = start + 1;
+	j = i;
 	while (j < length)
 	{
 		if ((*array)[j] < pivot)
@@ -29,11 +32,13 @@ static int partition(int **array, int start, int length)
 	return (i - 1);
 }
 
-void quick_sort(int *array, int start, int length)
+void	quick_sort(int *array, int start, int length)
 {
+	int	pivot_index;
+
 	if (length > start)
 	{
-		int pivot_index = partition(&array, start, length);
+		pivot_index = partition(&array, start, length);
 		quick_sort(array, start, pivot_index);
 		quick_sort(array, pivot_index + 1, length);
 	}

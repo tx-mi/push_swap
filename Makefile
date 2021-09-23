@@ -9,14 +9,14 @@ HEADER = ./includes/push_swap.h
 HEADER_INC = -I./includes/
 
 # Sources
-SRC = $(shell ls ./sources/*.c)
-# UTILS = $(shell ls ./sources/utils/*.c) 
-SRCS =  $(SRC)
+SRC = $(shell ls ./sources/*.c) $(shell ls ./sources/API_operations/*.c)
 
+# Objects
 OBJS = $(patsubst %.c, %.o, $(SRC))
+
 # Commands
 CC	= gcc
-CFLAGS =
+CFLAGS = -Wall -Wextra -Werror
 RM = rm -rf
 
 %.o : %.c $(HEADER)

@@ -1,9 +1,9 @@
 #include "push_swap.h"
 
-static int check_on_letters(char **argv, int argc)
+static int	check_on_letters(char **argv, int argc)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 1;
 	while (i < argc)
@@ -11,7 +11,8 @@ static int check_on_letters(char **argv, int argc)
 		j = 0;
 		while (argv[i][j])
 		{
-			if (!ft_isdigit(argv[i][j]) && argv[i][j] != ' ' && !ft_atoi(&argv[i][j]))
+			if (!ft_isdigit(argv[i][j]) && argv[i][j] != ' ' &&
+				!ft_atoi(&argv[i][j]))
 				return (1);
 			j++;
 		}
@@ -20,7 +21,7 @@ static int check_on_letters(char **argv, int argc)
 	return (0);
 }
 
-t_stack *parse(int argc, char **argv)
+t_stack	*parse(int argc, char **argv)
 {
 	t_stack	*stack_a;
 	int		i;
@@ -32,14 +33,16 @@ t_stack *parse(int argc, char **argv)
 	i = 1;
 	j = 0;
 	if (argc > 2)
-		while (i < argc) // Parse without quotes
+		while (i < argc)
 			add_back(&stack_a, new_item(ft_atoi(argv[i++])));
-	else if (argc == 2) // Parse with quotes
+	else if (argc == 2)
+	{
 		while (argv[i][j])
 		{
 			add_back(&stack_a, new_item(ft_atoi(&(argv[i][j]))));
 			while (argv[i][j] && argv[i][j++] != ' ')
 				;
 		}
+	}
 	return (stack_a);
 }

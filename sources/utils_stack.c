@@ -2,7 +2,7 @@
 
 t_stack	*new_item(int value)
 {
-	t_stack *item;
+	t_stack	*item;
 
 	item = (t_stack *)malloc(sizeof(*item));
 	if (!item)
@@ -40,7 +40,6 @@ void	add_back(t_stack **stack, t_stack *new_item)
 	last_item = (*stack);
 	if (*stack)
 	{
-		// if the first item is exisist, spin last_item to the end
 		while (last_item->next)
 			last_item = last_item->next;
 		last_item->next = new_item;
@@ -56,16 +55,4 @@ void	add_to_stack(t_stack **stack, int len, char **values)
 	i = 1;
 	while (i < len)
 		add_back(stack, new_item(ft_atoi(values[i++])));
-}
-
-void	print_stack(t_stack *firts_item)
-{
-	t_stack *item;
-
-	item = firts_item;
-	while (item)
-	{
-		printf("value: %d - order: %d\n", item->value, item->order);
-		item = item->next;
-	}
 }
