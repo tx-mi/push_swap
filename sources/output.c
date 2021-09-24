@@ -37,6 +37,12 @@ void	print_operations(t_listOperations *operations)
 		else if ((s2 && !ft_strncmp(s1, "pa", 2) && !(ft_strncmp(s2, "pb", 2)))
 			|| (!ft_strncmp(s1, "pb", 2) && !(ft_strncmp(s2, "pa", 2))))
 			operations = operations->next;
+		else if ((s2 && !ft_strncmp(s1, "rra", 3) && !(ft_strncmp(s2, "rrb", 3)))
+			|| (!ft_strncmp(s1, "rrb", 3) && !(ft_strncmp(s2, "rra", 3))))
+		{
+			printf("rrr");
+			operations = operations->next;
+		}
 		else
 			printf("%s\n", operations->operation);
 		operations = operations->next;
