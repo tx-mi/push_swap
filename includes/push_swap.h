@@ -2,7 +2,6 @@
 
 # define PUSH_SWAP_H
 
-# include "stdio.h"
 # include "libft.h"
 
 typedef struct s_stack
@@ -68,6 +67,15 @@ void				add_to_stack(t_stack **stack, int len, char **values);
 void				print_stack(t_stack *first_item);
 void				free_all(t_stack **stack_a, t_stack **stack_b,
 						t_info **info);
+
+// Optimize
+int					is_under(t_stack **stack_a, t_info **info);
+int					last_next(t_stack **stack_b, t_stack **stack_a,
+						t_info **info, t_listOperations **operations);
+void				three_items(t_stack **stack_a,
+						t_listOperations **operations);
+void				five_items(t_stack **stack_a, t_stack **stack_b,
+						t_listOperations **operations);
 
 // Out put
 void				print_operations(t_listOperations *operations);

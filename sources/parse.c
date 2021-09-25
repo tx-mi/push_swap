@@ -12,8 +12,12 @@ static int	check_on_letters(char **argv, int argc)
 		while (argv[i][j])
 		{
 			if (!ft_isdigit(argv[i][j]) && argv[i][j] != ' ' &&
-				!ft_atoi(&argv[i][j]))
+				!ft_atoi(&argv[i][j]) && argv[i][j] != '0')
 				return (1);
+			if (ft_atoi(&argv[i][j]) == -1 && argv[i][j] != '-')
+				return (1);
+			if (ft_atoi(&argv[i][j]) == -2147483648)
+				j++;
 			j++;
 		}
 		i++;

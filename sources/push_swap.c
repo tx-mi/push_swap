@@ -1,51 +1,5 @@
 #include "push_swap.h"
 
-int	last_next(t_stack **stack_b, t_stack **stack_a, t_info **info,
-		t_listOperations **operations)
-{
-	t_stack	*last_item;
-	int len;
-
-	last_item = *stack_b;
-	len = len_stack(*stack_b);
-	if (len > 2)
-	{
-		while (last_item->next)
-			last_item = last_item->next;
-		if (last_item->order == (*info)->next)
-		{
-			rrotate_b(stack_b, operations);
-			(*stack_b)->flag = (*info)->flag;
-			(*stack_b)->fix_position = 1;
-			(*info)->next++;
-			push_a(stack_b, stack_a, operations);
-			rotate_a(stack_a, operations);
-			return (1);
-		}
-	}
-	return (0);
-}
-
-int	under(t_stack **stack_a, t_info **info)
-{
-	t_stack *item;
-	int flag;
-
-	item = (*stack_a);
-	flag = 0;
-	while (item)
-	{
-		if (!flag && item->order <= (*info)->mid)
-			return (0);
-		else if (item->fix_position)
-			flag++;
-		else if (flag && item->order == (*info)->next)
-			return (1);
-		item = item->next;
-	}
-	return (0);
-}
-
 void	first_divide(t_stack **stack_a, t_stack **stack_b,
 			t_info **info, t_listOperations **operations)
 {
@@ -55,7 +9,7 @@ void	first_divide(t_stack **stack_a, t_stack **stack_b,
 	{
 		if (!(*stack_a)->fix_position && (*stack_a)->order <= (*info)->mid)
 			push_b(stack_a, stack_b, operations);
-		else if (under(stack_a, info))
+		else if (is_under(stack_a, info))
 			rrotate_a(stack_a, operations);
 		else
 			rotate_a(stack_a, operations);
@@ -74,7 +28,6 @@ void	second_divide(t_stack **stack_a, t_stack **stack_b,
 		{
 			if ((*stack_b)->order == (*info)->next)
 			{
-				(*stack_b)->flag = (*info)->flag;
 				(*stack_b)->fix_position = 1;
 				(*info)->next++;
 				push_a(stack_b, stack_a, operations);
@@ -129,6 +82,12 @@ void	push_swap(t_stack **stack)
 	operations = NULL;
 	init_info(&info);
 	info->next = 1;
+	if (len_stack(stack_a) == 2 && !is_sorted(stack_a))
+		swap_a(&stack_a, &operations);
+	else if (len_stack(stack_a) == 3 && !is_sorted(stack_a))
+		three_items(&stack_a, &operations);
+	else if (len_stack(stack_a) == 5 && !is_sorted(stack_a))
+		five_items(&stack_a, &stack_b, &operations);
 	while (!is_sorted(stack_a))
 	{
 		first_divide(&stack_a, &stack_b, &info, &operations);

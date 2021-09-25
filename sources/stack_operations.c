@@ -12,11 +12,11 @@ void	push(t_stack **from, t_stack **to)
 
 void	swap(t_stack **stack)
 {
-	if (len_stack(*stack) >= 2 && (*stack)->value != (*stack)->next->value)
+	if (len_stack(*stack) >= 2 && (*stack)->order != (*stack)->next->order)
 	{
-		(*stack)->value += (*stack)->next->value;
-		(*stack)->next->value = (*stack)->value - (*stack)->next->value;
-		(*stack)->value -= (*stack)->next->value;
+		(*stack)->order += (*stack)->next->order;
+		(*stack)->next->order = (*stack)->order - (*stack)->next->order;
+		(*stack)->order -= (*stack)->next->order;
 	}
 }
 
