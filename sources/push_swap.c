@@ -145,13 +145,16 @@ int	main(int argc, char **argv)
 	t_stack	*stack_a;
 	int		*sorted_array;
 
-	stack_a = parse(argc, argv);
-	sorted_array = sorting_array(&stack_a);
-	if (!stack_a || !sorted_array)
+	if (argc > 1)
 	{
-		write(2, "Error\n", 6);
-		return (2);
+		stack_a = parse(argc, argv);
+		sorted_array = sorting_array(&stack_a);
+		if (!stack_a || !sorted_array)
+		{
+			write(2, "Error\n", 6);
+			return (2);
+		}
+		free(sorted_array);
+		push_swap(&stack_a);
 	}
-	free(sorted_array);
-	push_swap(&stack_a);
 }

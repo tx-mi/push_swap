@@ -28,7 +28,7 @@ void	print_operations(t_listOperations *operations)
 	char	*s1;
 	char	*s2;
 
-	while (operations->next)
+	while (operations && operations->next)
 	{
 		s1 = operations->operation;
 		s2 = operations->next->operation;
@@ -47,5 +47,6 @@ void	print_operations(t_listOperations *operations)
 			printf("%s\n", operations->operation);
 		operations = operations->next;
 	}
-	printf("%s\n", operations->operation);
+	if (operations)
+		printf("%s\n", operations->operation);
 }
